@@ -4,6 +4,16 @@ let image1 = document.querySelector('section img:nth-child(2)');
 let image2 = document.querySelector('section img:nth-child(3)');
 let image3 = document.querySelector('section img:nth-child(4)')
 let container = document.querySelector(`section`)
+let myButton = document.querySelector(`section + div`)
+container.addEventListener(`click`, myEventHandler)
+
+function Pic(name, fileExt = `jpg`) {
+    this.productName = name;
+    this.src = `../img/images/${name}.${fileExt}`;
+    this.views = 0;
+    this.likes = 0
+
+};
 
 let wineGlass = new Pic(`wine-glassjpg`);
 let waterCan = new Pic(`water-can`);
@@ -34,13 +44,6 @@ let pictureArray = [wineGlass, waterCan, unicorn, tauntaun,
 let startingClicksCount = 0;
 let clicksAllowed = 25;
 
-function Pic(name, fileExt = `jpg`) {
-    this.productName = name;
-    this.src = `../img/images/${name}.${fileExt}`;
-    this.views = 0;
-    this.likes = 0
-
-};
 
 function getRandomNumber() {
     return Math.floor(Math.random() * pictureArray.length);
@@ -62,31 +65,39 @@ function renderPics() {
     // console.log(pictureArray[picOne])
     // console.log(pictureArray)
 
-    while (randomPicOne === randomPicTwo || randomPicOne === randomPicThree || randomPicTwo === randomPicThree) {
+    if (randomPicOne === randomPicTwo || randomPicTwo === randomPicThree || randomPicThree === randomPicOne) {
         renderPics()
     }
+
+
 };
 
 function myEventHandler(e) {
-    // console.log(e.target.currentSrc)
+    startingClicksCount++
+    console.log(startingClicksCount)
     let chosenPic = e.target.alt
     for (let i = 0; i < pictureArray.length; i++) {
         if (pictureArray[i].productName === chosenPic) {
             pictureArray[i].likes++
         }
     }
+    renderPics()
     console.log(pictureArray)
-    renderPics()
+
+    function renderResults() {
+        let results = document.querySelector('ul')
+        for (let j = 0; j < pictureArray.length; j++) {
+            let resultLi = document.createElement(`li`)
+            resultLi.textContent = `${pictureArray[j].productName} had ${pictureArray[j].views} views and ${pictureArray[j].likes} likes.`
+            results.appendChild(resultLi)
+        }
+    }
+
+    if (startingClicksCount === clicksAllowed) {
+        container.removeEventListener(`click`, myEventHandler)
+        myButton.addEventListener(`click`, renderResults)
+    }
 }
 
-
-if (startingClicksCount < clicksAllowed) {
-    renderPics()
-}
-else {
-    container.removeEventListener(`click`, myEventHandler)
-}
 
 renderPics()
-
-container.addEventListener(`click`, myEventHandler)

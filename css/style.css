@@ -26,3 +26,14 @@ section img {
 article {
     margin-top: 50px;
 }
+
+img {
+    cursor: pointer;
+}
+
+div {
+    background-color: lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-block;
+}
