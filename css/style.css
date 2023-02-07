@@ -1,0 +1,28 @@
+nav {
+    display: flex;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-left: 25%;
+}
+
+h2 {
+    margin-right: 3%;
+}
+
+section {
+
+    display: flex;
+    gap: 25px;
+}
+
+section img {
+    height: 300px;
+    width: 300px;
+    border: 2px solid black;
+}
+
+article {
+    margin-top: 50px;
+}
