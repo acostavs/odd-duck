@@ -31,7 +31,7 @@ img {
     cursor: pointer;
 }
 
-div {
+div:first-of-type {
     background-color: lightgrey;
     border-radius: 5px;
     padding: 5px;
