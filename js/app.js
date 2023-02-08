@@ -18,32 +18,78 @@ function Pic(name, fileExt = `jpg`) {
 
 };
 
-let wineGlass = new Pic(`wine-glass`);
-let waterCan = new Pic(`water-can`);
-let unicorn = new Pic(`unicorn`);
-let tauntaun = new Pic(`tauntaun`);
-let sweep = new Pic(`sweep`, `png`);
-let shark = new Pic(`shark`);
-let scissors = new Pic(`scissors`);
-let petSweep = new Pic(`pet-sweep`);
-let pen = new Pic(`pen`);
-let dragon = new Pic(`dragon`);
-let dogDuck = new Pic(`dog-duck`);
-let cthulhu = new Pic(`cthulhu`);
-let chair = new Pic(`chair`);
-let bubbleGum = new Pic(`bubblegum`);
-let breakfast = new Pic(`breakfast`);
-let boots = new Pic(`boots`);
-let bathroom = new Pic(`bathroom`);
-let banana = new Pic(`banana`);
-let bag = new Pic(`bag`);
+function storePic(picToStore) {
+    let stringifiedPic = JSON.stringify(picToStore)
+    console.log("pqpqpq", stringifiedPic)
+    localStorage.setItem('pic', stringifiedPic)
+}
 
-let pictureArray = [wineGlass, waterCan, unicorn, tauntaun,
-    sweep, shark, scissors, petSweep, pen, dragon, dogDuck,
-    cthulhu, chair, bubbleGum, breakfast, boots, bathroom,
-    banana, bag
-];
+function getStoredPic() {
+    let potentialPicFromStore = localStorage.getItem(`pic`)
+    if (potentialPicFromStore) {
+        let parsedPic = JSON.parse(potentialPicFromStore)
+        return parsedPic
+    }
+}
+
+
+// console.log(backIntoPic)
+
+// let wineGlass = new Pic(`wine-glass`);
+// let waterCan = new Pic(`water-can`);
+// let unicorn = new Pic(`unicorn`);
+// let tauntaun = new Pic(`tauntaun`);
+// let sweep = new Pic(`sweep`, `png`);
+// let shark = new Pic(`shark`);
+// let scissors = new Pic(`scissors`);
+// let petSweep = new Pic(`pet-sweep`);
+// let pen = new Pic(`pen`);
+// let dragon = new Pic(`dragon`);
+// let dogDuck = new Pic(`dog-duck`);
+// let cthulhu = new Pic(`cthulhu`);
+// let chair = new Pic(`chair`);
+// let bubbleGum = new Pic(`bubblegum`);
+// let breakfast = new Pic(`breakfast`);
+// let boots = new Pic(`boots`);
+// let bathroom = new Pic(`bathroom`);
+// let banana = new Pic(`banana`);
+// let bag = new Pic(`bag`);
+
+let pictureArray = [];
 console.log(pictureArray)
+
+function createPicArray() {
+    let myPicBackFromStorage = getStoredPic()
+    if (myPicBackFromStorage) {
+        pictureArray = myPicBackFromStorage
+    }
+    else {
+        let wineGlass = new Pic(`wine-glass`);
+        let waterCan = new Pic(`water-can`);
+        let unicorn = new Pic(`unicorn`);
+        let tauntaun = new Pic(`tauntaun`);
+        let sweep = new Pic(`sweep`, `png`);
+        let shark = new Pic(`shark`);
+        let scissors = new Pic(`scissors`);
+        let petSweep = new Pic(`pet-sweep`);
+        let pen = new Pic(`pen`);
+        let dragon = new Pic(`dragon`);
+        let dogDuck = new Pic(`dog-duck`);
+        let cthulhu = new Pic(`cthulhu`);
+        let chair = new Pic(`chair`);
+        let bubbleGum = new Pic(`bubblegum`);
+        let breakfast = new Pic(`breakfast`);
+        let boots = new Pic(`boots`);
+        let bathroom = new Pic(`bathroom`);
+        let banana = new Pic(`banana`);
+        let bag = new Pic(`bag`);
+        pictureArray = [wineGlass, waterCan, unicorn, tauntaun,
+            sweep, shark, scissors, petSweep, pen, dragon, dogDuck,
+            cthulhu, chair, bubbleGum, breakfast, boots, bathroom,
+            banana, bag
+        ];
+    }
+}
 
 let startingClicksCount = 0;
 let clicksAllowed = 25;
@@ -54,10 +100,6 @@ function getRandomNumber() {
 
 
 function renderPics() {
-    // let randomPicOne = getRandomNumber()
-    // let randomPicTwo = getRandomNumber()
-    // let randomPicThree = getRandomNumber()
-
     while (indexArr.length < 19) {
         let num = getRandomNumber();
         // console.log(num)
@@ -115,9 +157,11 @@ function myEventHandler(e) {
     };
 
     if (startingClicksCount === clicksAllowed) {
+        console.log("hi")
         container.removeEventListener(`click`, myEventHandler)
         myButton.addEventListener(`click`, renderResults)
         renderChart();
+        storePic(pictureArray)
     };
 };
 
@@ -152,4 +196,6 @@ function renderChart() {
 
     new Chart(ctx, config);
 };
+createPicArray()
 renderPics();
+
