@@ -169,22 +169,34 @@ function myEventHandler(e) {
 function renderChart() {
     let productLikes = [];
     let product = [];
+    let view = [];
     for (let i = 0; i < pictureArray.length; i++) {
         productLikes.push(pictureArray[i].likes)
         product.push(pictureArray[i].productName)
     }
-    console.log(productLikes)
+    for (let i = 0; i < pictureArray.length; i++) {
+        view.push(pictureArray[i].views)
+    }
+    // console.log(productLikes)
     const ctx = document.getElementById('myChart');
     let config = {
         type: 'bar',
         data: {
             labels: product,
-            datasets: [{
-                label: '# of Votes',
-                data: productLikes,
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: '# of Votes',
+                    data: productLikes,
+                    borderWidth: 1
+                },
+                {
+                    label: '# of Views',
+                    data: view,
+                    borderWidth: 1
+                }
+            ]
         },
+
         options: {
             scales: {
                 y: {
